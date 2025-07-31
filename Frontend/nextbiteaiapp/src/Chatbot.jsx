@@ -29,22 +29,24 @@ function ChatInput({ onSendMessage }) {
 function Chatbot() {
     const [messages, setMessages] = useState([]);
 
+    // Send user message to the AI model via nextbite_notebook.py backend
     const handleSendMessage = async (message) => {
         const userMessage = { text: message, sender: "user" };
         setMessages((prevMessages) => [...prevMessages, userMessage]);
 
         try {
-            const response = await fetch("/api/prototype2", {
+            const response = await fetch("/api/nextbite_notebook", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message }),
             });
             const data = await response.json();
-            const botMessage = { text: data.reply, sender: "bot" };
-            setMessages((prevMessages) => [...prevMessages, botMessage]);
+            // Use the AI model's response
+            const aiMessage = { text: data.reply, sender: "bot" };
+            setMessages((prevMessages) => [...prevMessages, aiMessage]);
         } catch (error) {
-            const botMessage = { text: "Sorry, there was an error.", sender: "bot" };
-            setMessages((prevMessages) => [...prevMessages, botMessage]);
+            const errorMessage = { text: "Sorry, there was an error.", sender: "bot" };
+            setMessages((prevMessages) => [...prevMessages, errorMessage]);
         }
     };
 
