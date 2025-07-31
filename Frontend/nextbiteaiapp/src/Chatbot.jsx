@@ -35,7 +35,7 @@ function Chatbot() {
         setMessages((prevMessages) => [...prevMessages, userMessage]);
 
         try {
-            const response = await fetch("/api/nextbite_notebook", {
+            const response = await fetch("/api/nextbite_notebook.py", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message }),
